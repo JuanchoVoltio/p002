@@ -3,6 +3,7 @@ package com.heading.cospawnautgo.dog.service;
 import com.heading.cospawnautgo.dog.model.Dog;
 import com.heading.cospawnautgo.dog.repository.DogRepository;
 import com.heading.cospawnautgo.global.service.BasicCrudService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,19 @@ public class DogService implements BasicCrudService<Dog, String> {
         return repository.save(entity);
     }
 
+    /**
+     * In case of not found an instance of
+     * @param s
+     * @return
+     */
     @Override
     public Dog read(String s) {
-        return null;
+        return repository.findById(s).orElse(null);
     }
 
     @Override
     public List<Dog> readAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
