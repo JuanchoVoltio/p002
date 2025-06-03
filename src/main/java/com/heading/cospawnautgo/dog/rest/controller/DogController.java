@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("{contextPath}/dog")
+@RequestMapping("v1/dog")//TODO: Read base path from properties
 public class DogController {
     protected DogService dogService;
 
@@ -20,13 +20,19 @@ public class DogController {
         this.dogService = dogService;
     }
 
-    @GetMapping
+    @GetMapping//("/all")
     public ResponseEntity<Collection<Dog>> getAll(){
         Collection<Dog> result = dogService.readAll();
-        return result.isEmpty() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(Collections.emptyList());
+        return !result.isEmpty() ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(Collections.emptyList());
     }
 
-    @PostMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<Dog> findById(@PathVariable String id){
+        Dog result = dogService.read(id);
+        return result != null ? ResponseEntity.ok(result) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    @PostMapping//("/create")
     public ResponseEntity<Dog> create(@RequestBody Dog dog){
         Dog result = dogService.create(dog);
         return result != null ? ResponseEntity.status(HttpStatus.CREATED).body(result) : ResponseEntity.unprocessableEntity().body(dog);

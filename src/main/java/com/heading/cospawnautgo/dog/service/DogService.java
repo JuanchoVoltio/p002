@@ -20,9 +20,14 @@ public class DogService implements BasicCrudService<Dog, String> {
         this.repository = repository;
     }
 
+    /**
+     * Creates a new record in the database for the new dog. The id of the dog is a combination of the owner's id and the dog's name.
+     * @param entity
+     * @return
+     */
     @Override
     public Dog create(Dog entity) {
-        entity.setId(entity.getOwner().getId() + entity.getName());
+        entity.setId(entity.getOwner().getId().trim().toLowerCase() + entity.getName().trim().toLowerCase());
         entity.setRegisteredOn(LocalDateTime.now());
         return repository.save(entity);
     }
