@@ -1,4 +1,4 @@
-package com.heading.cospawnautgo.dog;
+package com.heading.cospawnautgo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
