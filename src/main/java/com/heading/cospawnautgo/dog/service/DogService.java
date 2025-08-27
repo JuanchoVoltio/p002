@@ -44,11 +44,13 @@ public class DogService implements BasicCrudService<Dog, String> {
 
     @Override
     public Dog update(Dog entity) {
-        return null;
+        boolean isValid = entity.getId() != null && entity.getName() != null && entity.getOwner() != null;
+        return isValid ? repository.save(entity) : null;
     }
 
     @Override
     public boolean delete(Dog entity) {
-        return false;
+        repository.deleteById(entity.getId());
+        return true;
     }
 }
